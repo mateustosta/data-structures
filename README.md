@@ -14,3 +14,4 @@ This repository contains the main algorithms developed in the course Data Struct
 
 ## Assignments:
  - [Assignment #1: Create an Abstract Data Type of a Binary Tree](https://github.com/mateustosta/data-structures/tree/master/Assignment%20%231/binary-tree)
+ - [Assignment #2: Create an Abstract Data Type of a AVL Tree](https://github.com/mateustosta/data-structures/tree/master/Assignment%20%231/avl-tree)
