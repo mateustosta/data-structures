@@ -175,7 +175,7 @@ void bTree_rotationRR(bTree* A) {
   B->left = (*A);
   (*A)->height = bigger(btNode_height((*A)->left), btNode_height((*A)->right)) + 1;
   B->height = bigger(btNode_height(B->right), (*A)->height) + 1;
-  (*A) = B;
+  *A = B;
 }
 
 void bTree_rotationLR(bTree* A) {
