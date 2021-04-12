@@ -33,6 +33,10 @@ bsTree* bsTree_create(void) {
 
 // Função para inserir valores nos nós da árvore
 bstNode* bstNode_insert(bstNode* root, int value) {
+	// valor já está na árvore
+    	if (bstNode_find(root, value)) {
+        	return NULL;
+    	}
 	if (!root) {
 		root = (bstNode*) malloc(sizeof(bstNode));
 		root->value = value;
