@@ -9,9 +9,10 @@ This repository contains the main algorithms developed in the course Data Struct
 - [Assignments:](#assignments)
 
 ## References:
-- Yedidyah Langsam; Moshe J. Augenstein e Aaron M. Tenenbaum. Data Structures using C and C++. segunda. Prentice Hall. 1996 (MAIN REFERENCE)
-- Tanembaum, A. M., Sam, Y. L. e Augenstein, M. Estruturas de Dados usando C. . McGraw-Hill. 1995
+- Yedidyah Langsam; Moshe J. Augenstein e Aaron M. Tenenbaum. Data Structures using C and C++. Second Edition. Prentice Hall. 1996 (MAIN REFERENCE)
+- Szwarcfiter, L. J. and Markenzon, L. (2010). Estruturas de Dados e Seus Algoritmos. LTC, 3rd edition.
+- Cormen, T. H., Leiserson, C. E., Rivest, R. L., and Stein, C. (2009).Introduction to Algorithms, Third Edition. The MIT Press, 3rd edition
 
 ## Assignments:
  - [Assignment #1: Create an Abstract Data Type of a Binary Tree](https://github.com/mateustosta/data-structures/tree/master/Assignment%20%231/binary-tree)
- - [Assignment #2: Create an Abstract Data Type of a AVL Tree](https://github.com/mateustosta/data-structures/tree/master/Assignment%20%231/avl-tree)
+ - [Assignment #2: Create an Abstract Data Type of an AVL Tree](https://github.com/mateustosta/data-structures/tree/main/Assignment%20%232/avl-tree)
