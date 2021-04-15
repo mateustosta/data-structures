@@ -1,11 +1,11 @@
-typedef struct node* bTree;
+typedef struct node* avlTree;
 
-bTree* bTree_create();
-void bTree_clear(bTree* root);
-int bTree_insert(bTree* root, int value);
-int bTree_remove(bTree* root, int value);
-int bTree_empty(bTree* root);
-void bTree_preorder(bTree* root);
-void bTree_inorder(bTree* root);
-void bTree_postorder(bTree* root);
-int bTree_find_element(bTree* root, int value);
+avlTree* avlTree_create();
+void avlTree_clear(avlTree* root);
+int avlTree_insert(avlTree* root, int value);
+int avlTree_remove(avlTree* root, int value);
+int avlTree_empty(avlTree* root);
+void avlTree_preorder(avlTree* root);
+void avlTree_inorder(avlTree* root);
+void avlTree_postorder(avlTree* root);
+int avlTree_find_element(avlTree* root, int value);

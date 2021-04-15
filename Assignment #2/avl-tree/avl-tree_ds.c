@@ -11,8 +11,8 @@ struct node {
 };
 
 // Função para criar uma Árvore AVL
-bTree* bTree_create(){
-    bTree* root = (bTree*) malloc(sizeof(bTree));
+avlTree* avlTree_create(){
+    avlTree* root = (avlTree*) malloc(sizeof(avlTree));
     if(root != NULL) {
         *root = NULL;
     }
@@ -31,7 +31,7 @@ void btNode_clear(struct node* node){
 }
 
 // Função para liberar a árvore
-void bTree_clear(bTree* root){
+void avlTree_clear(avlTree* root){
     if(root == NULL) {
       return;
     }
@@ -50,7 +50,6 @@ int btNode_height(struct node* node) {
 
 // Calcula o fator de balanceamento de um nó
 int btNode_balance_factor(struct node* node) {
-  //printf("NODE: %d\nBALANCE_FACTOR: %d\n", node->value,labs(btNode_height(node->left) - btNode_height(node->right)));
   return labs(btNode_height(node->left) - btNode_height(node->right));
 }
 
@@ -64,7 +63,7 @@ int bigger(int x, int y) {
 }
 
 // Verifica se a árvore está vazia
-int bTree_empty(bTree* root) {
+int avlTree_empty(avlTree* root) {
   if (root == NULL) {
     return 1;
   }
@@ -75,15 +74,15 @@ int bTree_empty(bTree* root) {
 }
 
 // Calcula a altura da árvore
-int bTree_height(bTree* root) {
+int avlTree_height(avlTree* root) {
   if (root == NULL) {
     return 0;
   }
   if (*root == NULL) {
     return 0;
   }
-  int left_height = bTree_height(&((*root)->left));
-  int right_height = bTree_height(&((*root)->right));
+  int left_height = avlTree_height(&((*root)->left));
+  int right_height = avlTree_height(&((*root)->right));
   if (left_height > right_height) {
     return (left_height + 1);
   } else {
@@ -92,43 +91,43 @@ int bTree_height(bTree* root) {
 }
 
 // Pré ordem
-void bTree_preorder(bTree* root) {
+void avlTree_preorder(avlTree* root) {
   if (root == NULL) {
     return;
   }
   if (*root != NULL) {
     printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, btNode_height(*root), btNode_balance_factor(*root));
-    bTree_preorder(&((*root)->left));
-    bTree_preorder(&((*root)->right));
+    avlTree_preorder(&((*root)->left));
+    avlTree_preorder(&((*root)->right));
   }
 }
 
 // Em order
-void bTree_inorder(bTree* root) {
+void avlTree_inorder(avlTree* root) {
   if (root == NULL) {
     return;
   }
   if (*root != NULL) {
-    bTree_inorder(&((*root)->left));
+    avlTree_inorder(&((*root)->left));
     printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, btNode_height(*root), btNode_balance_factor(*root));
-    bTree_inorder(&((*root)->right));
+    avlTree_inorder(&((*root)->right));
   }
 }
 
 // Pós ordem
-void bTree_postorder(bTree* root) {
+void avlTree_postorder(avlTree* root) {
   if (root == NULL) {
     return;
   }
   if (*root != NULL) {
-    bTree_postorder(&((*root)->left));
-    bTree_postorder(&((*root)->right));
+    avlTree_postorder(&((*root)->left));
+    avlTree_postorder(&((*root)->right));
     printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, btNode_height(*root), btNode_balance_factor(*root));
   }
 }
 
 // Busca na árvore
-int bTree_find_element(bTree* root, int value) {
+int avlTree_find_element(avlTree* root, int value) {
   if (root == NULL) {
     return 0;
   }
@@ -155,8 +154,11 @@ A = +2    e   B = +1            LL
 A = -2    e   B = -1            RR
 A = +2    e   B = -1            LR
 A = -2    e   B = +1            RL
+
+Rotações: https://pt.wikipedia.org/wiki/%C3%81rvore_AVL#Rota%C3%A7%C3%A3o
 */
-void bTree_rotationLL(bTree* A) {
+void avlTree_rotationLL(avlTree* A) {
+  // Simples a direita
   printf("RotationLL\n");
   struct node* B;
   B = (*A)->left;
@@ -167,7 +169,8 @@ void bTree_rotationLL(bTree* A) {
   *A = B;
 }
 
-void bTree_rotationRR(bTree* A) {
+void avlTree_rotationRR(avlTree* A) {
+  // Simples a esquerda
   printf("RotationRR\n");
   struct node* B;
   B = (*A)->right;
@@ -178,14 +181,16 @@ void bTree_rotationRR(bTree* A) {
   *A = B;
 }
 
-void bTree_rotationLR(bTree* A) {
-  bTree_rotationRR(&(*A)->left);
-  bTree_rotationLL(A);
+void avlTree_rotationLR(avlTree* A) {
+  // Dupla a direita
+  avlTree_rotationRR(&(*A)->left);
+  avlTree_rotationLL(A);
 }
 
-void bTree_rotationRL(bTree* A) {
-  bTree_rotationLL(&(*A)->right);
-  bTree_rotationRR(A);
+void avlTree_rotationRL(avlTree* A) {
+  // Dupla a esquerda
+  avlTree_rotationLL(&(*A)->right);
+  avlTree_rotationRR(A);
 }
 
 // Insere um elemento na árvore avl
@@ -197,7 +202,7 @@ void bTree_rotationRL(bTree* A) {
 5. Calcula as alturas de cada sub-árvore
 6. Rotaciona se balance_factor for +2 ou -2
 */
-int bTree_insert(bTree* root, int value) {
+int avlTree_insert(avlTree* root, int value) {
   int result;
   // Árvore vazia ou nó folha
   if (*root == NULL) {
@@ -217,25 +222,69 @@ int bTree_insert(bTree* root, int value) {
   struct node* current_node = *root;
   // Insere à esquerda
   if (value < current_node->value) {
-    if ((result = bTree_insert(&(current_node->left), value)) == 1) {
+    // Se result == 1 o nó foi inserido, logo, precisamos verificar se é preciso
+    // balancear a árvore
+    if ((result = avlTree_insert(&(current_node->left), value)) == 1) {
       // Verifica se precisa balancear
       if (btNode_balance_factor(current_node) >= 2) {
+        /*
+        Se o valor inserido é menor que o valor
+        do filho da esquerda da raiz, então a inserção foi
+                  A
+                 /
+                B
+               /
+              C
+        C é o nó inserido, precisamos fazer uma rotação simples a direita
+        */ 
         if (value < (*root)->left->value) {
-          bTree_rotationLL(root);
+          avlTree_rotationLL(root);
         } else {
-          bTree_rotationLR(root);
+          /*
+          Se o valor inserido não é menor que o valor do filho da esquerda
+          da raiz, então a inserção foi
+                    A
+                   /
+                  B
+                   \
+                    C
+          Neste caso, precisamos fazer uma rotação dupla a direta
+          */
+          avlTree_rotationLR(root);
         }
       }
     }
   } else {
     // Insere à direita
     if (value > current_node->value) {
-      if ((result = bTree_insert(&(current_node->right), value)) == 1) {
+      // Se result == 1 o nó foi inserido, logo, precisamos verificar se é preciso
+      // balancear a árvore
+      if ((result = avlTree_insert(&(current_node->right), value)) == 1) {
         if (btNode_balance_factor(current_node) >= 2) {
+          /*
+          Se o valor inserido é menor que o valor
+          do filho da esquerda da raiz, então a inserção foi
+                    A
+                     \
+                      B
+                       \
+                        C
+          C é o nó inserido, precisamos fazer uma rotação simples a esquerda
+          */ 
           if ((*root)->right->value < value) {
-            bTree_rotationRR(root);
+            avlTree_rotationRR(root);
           } else {
-            bTree_rotationRL(root);
+            /*
+            Se o valor inserido não é menor que o valor do filho da esquerda
+            da raiz, então a inserção foi
+                    A
+                     \
+                      B
+                     /
+                    C
+            Neste caso, precisamos fazer uma rotação dupla a esquerda
+            */
+            avlTree_rotationRL(root);
           }
         }
       }
@@ -267,9 +316,9 @@ struct node* find_smaller(struct node* current_node) {
 3. Nó com 2 filhos
 4. Balanceamento
 Dica: Remover da sub-árvore da direita equivale a inserir um 
-  // nó na sub-árvore da esquerda
+  nó na sub-árvore da esquerda
 */
-int bTree_remove(bTree* root, int value) {
+int avlTree_remove(avlTree* root, int value) {
   // Valor não existe
   if (*root == NULL) {
     return 0;
@@ -278,13 +327,21 @@ int bTree_remove(bTree* root, int value) {
 
   // Remove a esquerda
   if (value < (*root)->value) {
-    if ((result = bTree_remove(&(*root)->left, value)) == 1) {
+    // Se result == 1, removeu um nó
+    if ((result = avlTree_remove(&(*root)->left, value)) == 1) {
       // Verifica se precisa balancear
       if (btNode_balance_factor(*root) >= 2) {
+        /*
+        Removemos um nó na subárvore da esquerda,
+        então, precisamos verificar se é necessário
+        balancear a subárvore da direita.
+        */
         if (btNode_height((*root)->right->left) <= btNode_height((*root)->right->right)) {
-          bTree_rotationRR(root);
+          // Rotacão simples a esquerda
+          avlTree_rotationRR(root);
         } else {
-          bTree_rotationRL(root);
+          // Rotação dupla a esquerda
+          avlTree_rotationRL(root);
         }
       }
     }
@@ -292,13 +349,21 @@ int bTree_remove(bTree* root, int value) {
 
   // Remove a direita
   if (value > (*root)->value) {
-    if ((result = bTree_remove(&(*root)->right, value)) == 1) {
+    // Se result == 1, removeu um nó
+    if ((result = avlTree_remove(&(*root)->right, value)) == 1) {
       // Verifica se precisa balancear
       if (btNode_balance_factor(*root) >= 2) {
+        /*
+        Removemos um nó na subárvore da direita,
+        então, precisamos verificar se é necessário
+        balancear a subárvore da esquerda.
+        */
         if (btNode_height((*root)->left->right) <= btNode_height((*root)->left->left)) {
-          bTree_rotationLL(root);
+          // Rotação simples a direita
+          avlTree_rotationLL(root);
         } else {
-          bTree_rotationLR(root);
+          // Rotação dupla a esquerda
+          avlTree_rotationLR(root);
         }
       }
     }
@@ -324,14 +389,16 @@ int bTree_remove(bTree* root, int value) {
       (*root)->value = tmp->value;
 
       // Remove o nó
-      bTree_remove(&(*root)->right, (*root)->value);
+      avlTree_remove(&(*root)->right, (*root)->value);
       
       // Verifica se precisa balancear
       if (btNode_balance_factor(*root) >= 2) {
         if (btNode_height((*root)->left->right) <= btNode_height((*root)->left->left)) {
-          bTree_rotationLL(root);
+          // Rotação simples a direita
+          avlTree_rotationLL(root);
         } else {
-          bTree_rotationLR(root);
+          // Rotação dupla a direita
+          avlTree_rotationLR(root);
         }
       }
     }
