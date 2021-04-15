@@ -20,12 +20,12 @@ avlTree* avlTree_create(){
 }
 
 // Função para liberar cada nó
-void btNode_clear(struct node* node){
+void avlTreeNode_clear(struct node* node){
     if(node == NULL) {
       return;
     }
-    btNode_clear(node->left);
-    btNode_clear(node->right);
+    avlTreeNode_clear(node->left);
+    avlTreeNode_clear(node->right);
     free(node);
     node = NULL;
 }
@@ -35,12 +35,12 @@ void avlTree_clear(avlTree* root){
     if(root == NULL) {
       return;
     }
-    btNode_clear(*root);
+    avlTreeNode_clear(*root);
     free(root);
 }
 
 // Calcula a altura de um nó
-int btNode_height(struct node* node) {
+int avlTreeNode_height(struct node* node) {
   if (node == NULL) {
     return -1;
   } else {
@@ -49,8 +49,8 @@ int btNode_height(struct node* node) {
 }
 
 // Calcula o fator de balanceamento de um nó
-int btNode_balance_factor(struct node* node) {
-  return labs(btNode_height(node->left) - btNode_height(node->right));
+int avlTreeNode_balance_factor(struct node* node) {
+  return labs(avlTreeNode_height(node->left) - avlTreeNode_height(node->right));
 }
 
 // Calcula o maior valor
@@ -96,7 +96,7 @@ void avlTree_preorder(avlTree* root) {
     return;
   }
   if (*root != NULL) {
-    printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, btNode_height(*root), btNode_balance_factor(*root));
+    printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, avlTreeNode_height(*root), avlTreeNode_balance_factor(*root));
     avlTree_preorder(&((*root)->left));
     avlTree_preorder(&((*root)->right));
   }
@@ -109,7 +109,7 @@ void avlTree_inorder(avlTree* root) {
   }
   if (*root != NULL) {
     avlTree_inorder(&((*root)->left));
-    printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, btNode_height(*root), btNode_balance_factor(*root));
+    printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, avlTreeNode_height(*root), avlTreeNode_balance_factor(*root));
     avlTree_inorder(&((*root)->right));
   }
 }
@@ -122,7 +122,7 @@ void avlTree_postorder(avlTree* root) {
   if (*root != NULL) {
     avlTree_postorder(&((*root)->left));
     avlTree_postorder(&((*root)->right));
-    printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, btNode_height(*root), btNode_balance_factor(*root));
+    printf("Node: %d - Height: %d - Balance Factor: %d\n", (*root)->value, avlTreeNode_height(*root), avlTreeNode_balance_factor(*root));
   }
 }
 
@@ -164,8 +164,8 @@ void avlTree_rotationLL(avlTree* A) {
   B = (*A)->left;
   (*A)->left = B->right;
   B->right = *A;
-  (*A)->height = bigger(btNode_height((*A)->left), btNode_height((*A)->right)) + 1;
-  B->height = bigger(btNode_height(B->left), (*A)->height) + 1;
+  (*A)->height = bigger(avlTreeNode_height((*A)->left), avlTreeNode_height((*A)->right)) + 1;
+  B->height = bigger(avlTreeNode_height(B->left), (*A)->height) + 1;
   *A = B;
 }
 
@@ -176,8 +176,8 @@ void avlTree_rotationRR(avlTree* A) {
   B = (*A)->right;
   (*A)->right = B->left;
   B->left = (*A);
-  (*A)->height = bigger(btNode_height((*A)->left), btNode_height((*A)->right)) + 1;
-  B->height = bigger(btNode_height(B->right), (*A)->height) + 1;
+  (*A)->height = bigger(avlTreeNode_height((*A)->left), avlTreeNode_height((*A)->right)) + 1;
+  B->height = bigger(avlTreeNode_height(B->right), (*A)->height) + 1;
   *A = B;
 }
 
@@ -226,7 +226,7 @@ int avlTree_insert(avlTree* root, int value) {
     // balancear a árvore
     if ((result = avlTree_insert(&(current_node->left), value)) == 1) {
       // Verifica se precisa balancear
-      if (btNode_balance_factor(current_node) >= 2) {
+      if (avlTreeNode_balance_factor(current_node) >= 2) {
         /*
         Se o valor inserido é menor que o valor
         do filho da esquerda da raiz, então a inserção foi
@@ -260,7 +260,7 @@ int avlTree_insert(avlTree* root, int value) {
       // Se result == 1 o nó foi inserido, logo, precisamos verificar se é preciso
       // balancear a árvore
       if ((result = avlTree_insert(&(current_node->right), value)) == 1) {
-        if (btNode_balance_factor(current_node) >= 2) {
+        if (avlTreeNode_balance_factor(current_node) >= 2) {
           /*
           Se o valor inserido é menor que o valor
           do filho da esquerda da raiz, então a inserção foi
@@ -294,7 +294,7 @@ int avlTree_insert(avlTree* root, int value) {
     }
   }
   // Recalcula a altura do nó atual
-  current_node->height = bigger(btNode_height(current_node->left), btNode_height(current_node->right)) + 1;
+  current_node->height = bigger(avlTreeNode_height(current_node->left), avlTreeNode_height(current_node->right)) + 1;
   return result;
 }
 
@@ -330,13 +330,13 @@ int avlTree_remove(avlTree* root, int value) {
     // Se result == 1, removeu um nó
     if ((result = avlTree_remove(&(*root)->left, value)) == 1) {
       // Verifica se precisa balancear
-      if (btNode_balance_factor(*root) >= 2) {
+      if (avlTreeNode_balance_factor(*root) >= 2) {
         /*
         Removemos um nó na subárvore da esquerda,
         então, precisamos verificar se é necessário
         balancear a subárvore da direita.
         */
-        if (btNode_height((*root)->right->left) <= btNode_height((*root)->right->right)) {
+        if (avlTreeNode_height((*root)->right->left) <= avlTreeNode_height((*root)->right->right)) {
           // Rotacão simples a esquerda
           avlTree_rotationRR(root);
         } else {
@@ -352,13 +352,13 @@ int avlTree_remove(avlTree* root, int value) {
     // Se result == 1, removeu um nó
     if ((result = avlTree_remove(&(*root)->right, value)) == 1) {
       // Verifica se precisa balancear
-      if (btNode_balance_factor(*root) >= 2) {
+      if (avlTreeNode_balance_factor(*root) >= 2) {
         /*
         Removemos um nó na subárvore da direita,
         então, precisamos verificar se é necessário
         balancear a subárvore da esquerda.
         */
-        if (btNode_height((*root)->left->right) <= btNode_height((*root)->left->left)) {
+        if (avlTreeNode_height((*root)->left->right) <= avlTreeNode_height((*root)->left->left)) {
           // Rotação simples a direita
           avlTree_rotationLL(root);
         } else {
@@ -392,8 +392,8 @@ int avlTree_remove(avlTree* root, int value) {
       avlTree_remove(&(*root)->right, (*root)->value);
       
       // Verifica se precisa balancear
-      if (btNode_balance_factor(*root) >= 2) {
-        if (btNode_height((*root)->left->right) <= btNode_height((*root)->left->left)) {
+      if (avlTreeNode_balance_factor(*root) >= 2) {
+        if (avlTreeNode_height((*root)->left->right) <= avlTreeNode_height((*root)->left->left)) {
           // Rotação simples a direita
           avlTree_rotationLL(root);
         } else {
@@ -405,12 +405,12 @@ int avlTree_remove(avlTree* root, int value) {
 
     if (*root) {
       // Recalcula a altura do nó atual
-      (*root)->height = bigger(btNode_height((*root)->left), btNode_height((*root)->right)) + 1;
+      (*root)->height = bigger(avlTreeNode_height((*root)->left), avlTreeNode_height((*root)->right)) + 1;
     }
     return 1;
   }
 
   // Recalcula a altura do nó atual
-  (*root)->height = bigger(btNode_height((*root)->left), btNode_height((*root)->right)) + 1;
+  (*root)->height = bigger(avlTreeNode_height((*root)->left), avlTreeNode_height((*root)->right)) + 1;
   return result;
 }
