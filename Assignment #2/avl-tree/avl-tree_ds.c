@@ -362,7 +362,7 @@ int avlTree_remove(avlTree* root, int value) {
           // Rotação simples a direita
           avlTree_rotationLL(root);
         } else {
-          // Rotação dupla a esquerda
+          // Rotação dupla a direita
           avlTree_rotationLR(root);
         }
       }
