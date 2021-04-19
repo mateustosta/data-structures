@@ -1,11 +1,6 @@
-#ifndef BINARY_SEARCH_TREE_DS_H
-#define BINARY_SEARCH_TREE_DS_H
-
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct node bstNode;
-typedef struct tree bsTree;
+#include "binary-search-tree_ds.h"
 
 // Estrutura para armazenar os nós da árvore
 struct node {
@@ -34,9 +29,9 @@ bsTree* bsTree_create(void) {
 // Função para inserir valores nos nós da árvore
 bstNode* bstNode_insert(bstNode* root, int value) {
 	// valor já está na árvore
-    	if (bstNode_find(root, value)) {
-        	return NULL;
-    	}
+    if (bstNode_find(root, value)) {
+        return NULL;
+    }
 	if (!root) {
 		root = (bstNode*) malloc(sizeof(bstNode));
 		root->value = value;
@@ -131,6 +126,7 @@ void bstNode_print(bstNode* root) {
 // Função para printar a árvore
 void bsTree_print(bsTree* tree) {
 	bstNode_print(tree->root);
+	printf("\n");
 }
 
 // Função para buscar um valor nó a nó
@@ -154,5 +150,3 @@ bstNode* bstNode_find(bstNode* root, int value) {
 bstNode* bsTree_find(bsTree* tree, int value) {
 	return bstNode_find(tree->root, value);
 }
-
-#endif

@@ -1,8 +1,6 @@
-#ifndef BINARY_TREE_DS_H
-#define BINARY_TREE_DS_H
-
 #include <stdio.h>
 #include <stdlib.h>
+#include "binary-tree_ds.h"
 
 typedef struct node btNode;
 typedef struct tree bTree;
@@ -97,5 +95,3 @@ btNode* btNode_find(btNode* root, int value) {
 btNode* bTree_find(bTree* tree, int value) {
   return btNode_find(tree->root, value);
 }
-
-#endif
