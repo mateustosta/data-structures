@@ -2,21 +2,6 @@
 #include <stdlib.h>
 #include "binary-tree_ds.h"
 
-typedef struct node btNode;
-typedef struct tree bTree;
-
-// Struct para armazenar os nós da árvore
-struct node {
-  int value;
-  btNode* left;
-  btNode* right;
-};
-
-// Struct para armazenar a raiz da árvore
-struct tree {
-  btNode* root;
-};
-
 // Função para criar a árvore
 bTree* bTree_create(btNode* root) {
   bTree* tree = (bTree*) malloc(sizeof(bTree));

@@ -2,18 +2,6 @@
 #include <stdlib.h>
 #include "binary-search-tree_ds.h"
 
-// Estrutura para armazenar os nós da árvore
-struct node {
-	int value;
-	bstNode* left;
-	bstNode* right;
-};
-
-// Estrutura para armazenar a raiz da árvore
-struct tree {
-	bstNode* root;
-};
-
 // Função para criar a árvore
 bsTree* bsTree_create(void) {
 	bsTree* tree = (bsTree*) malloc(sizeof(bsTree));

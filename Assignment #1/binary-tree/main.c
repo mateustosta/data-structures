@@ -21,6 +21,10 @@ int main() {
 	bTree_print(tree);
 	printf("\n");
 
+	// Procura e printa um valor na árvore (NULL se não encontrar, printa -999)
+	btNode* node = bTree_find(tree, 112);
+	printf("%d\n", node != NULL ? node->value : -999);
+
 	// Libera a memória
 	bTree_clear(tree);
 

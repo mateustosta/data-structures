@@ -20,6 +20,10 @@ int main() {
 	// Printa a árvore preorder
 	bsTree_print(tree);
 	
+	// Procura e printa um valor (NULL se não encontrar, printa -999)
+	bstNode* node = bsTree_find(tree, 121);
+	printf("%d\n", node != NULL ? node->value : -999);
+
 	// Libera a memória
 	bsTree_clear(tree);
 
