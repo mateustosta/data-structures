@@ -1,17 +1,19 @@
-==9189== Memcheck, a memory error detector
-==9189== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==9189== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==9189== Command: ./binary-search-tree
-==9189== 
+==12921== Memcheck, a memory error detector
+==12921== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12921== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==12921== Command: ./binary-search-tree
+==12921== 
 <1<><4<><5<><>>>>
 <1<><4<><>>>
--999
-==9189== 
-==9189== HEAP SUMMARY:
-==9189==     in use at exit: 0 bytes in 0 blocks
-==9189==   total heap usage: 5 allocs, 5 frees, 1,104 bytes allocated
-==9189== 
-==9189== All heap blocks were freed -- no leaks are possible
-==9189== 
-==9189== For lists of detected and suppressed errors, rerun with: -s
-==9189== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Find: -999
+Tree's Height: 1
+Node's Height: -1
+==12921== 
+==12921== HEAP SUMMARY:
+==12921==     in use at exit: 0 bytes in 0 blocks
+==12921==   total heap usage: 5 allocs, 5 frees, 1,104 bytes allocated
+==12921== 
+==12921== All heap blocks were freed -- no leaks are possible
+==12921== 
+==12921== For lists of detected and suppressed errors, rerun with: -s
+==12921== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

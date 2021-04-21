@@ -45,10 +45,10 @@ bstNode* bstNode_remove(bstNode* root, int value) {
 	if (!root) {
 		return NULL;
 	} else if (root->value > value) {
-		// V > Root = esquerda
+		// Root > Value = esquerda
 		root->left = bstNode_remove(root->left, value);
 	} else if (root->value < value) {
-		// V < Root = direita
+		// Root < Value = direita
 		root->right = bstNode_remove(root->right, value);
 	} else {
 		// Achou o elemento
@@ -115,6 +115,22 @@ void bstNode_print(bstNode* root) {
 void bsTree_print(bsTree* tree) {
 	bstNode_print(tree->root);
 	printf("\n");
+}
+
+int bigger(int x, int y){
+  return (x > y) ? x : y;
+}
+
+int bstNode_height(bstNode* root) {
+  if (!root){
+    return -1;
+  } else {
+    return bigger(bstNode_height(root->left), bstNode_height(root->right)) + 1;
+  }
+}
+
+int bsTree_height(bsTree* tree) {
+  return bstNode_height(tree->root);
 }
 
 // Função para buscar um valor nó a nó
