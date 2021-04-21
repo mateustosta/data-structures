@@ -59,6 +59,22 @@ void bTree_print(bTree* tree) {
   btNode_print(tree->root);
 }
 
+int bigger(int x, int y){
+  return (x > y) ? x : y;
+}
+
+int btNode_height(btNode* root) {
+  if (!root){
+    return -1;
+  } else {
+    return bigger(btNode_height(root->left), btNode_height(root->right)) + 1;
+  }
+}
+
+int bTree_height(bTree* tree) {
+  return btNode_height(tree->root);
+}
+
 // Função para buscar um valor nó a nó
 // Método = Pré-ordem (raiz, esquerda, direita)
 btNode* btNode_find(btNode* root, int value) {

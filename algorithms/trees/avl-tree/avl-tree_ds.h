@@ -16,4 +16,5 @@ int avlTree_empty(avlTree* root);
 void avlTree_preorder(avlTree* root);
 void avlTree_inorder(avlTree* root);
 void avlTree_postorder(avlTree* root);
+int avlTree_height(avlTree* root);
 int avlTree_find_element(avlTree* root, int value);

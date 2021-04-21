@@ -12,16 +12,16 @@ int main() {
 	a árvore deve ser printada (inorder) como
 	2, 3, 5
 
-	Árvore após inserções
-			 5
-			/
-		   3
-		  /
-		 2
+	árvore após inserções
+            5
+           /
+          3
+         /
+        2
 	como é AVL, será balanceada, após balanceamento
-			3
-		   / \
-		  2   5
+            3
+           / \
+          2   5
 
 	O código está configura para printar as rotações quando
 	elas forem feitas, neste exemplo, deve ser printado, uma vez
@@ -50,21 +50,21 @@ int main() {
 
 	/*
 	Resultado esperado SEM balanceamento
-				3
-		   	   / \
-		      2   5
-		           \
-		           10
-		           /
-		          9
-		         /
-		        8
+                3
+               / \
+              2   5
+                   \
+                   10
+                   /
+                  9
+                 /
+                8
 	Com balanceamento
-				5
-		   	   / \
-		  	  3   9
-			 /   / \
-			2   8  10
+                5
+               / \
+              3   9
+             /   / \
+            2   8  10
 	Além disso, esperamos que seja printado
 	RotationLL
 	RotationRR
@@ -83,11 +83,11 @@ int main() {
 	/*
 	Removendo elementos da árvore
 	Resultado esperado
-				5
-		   	   / \
-		  	  3   8
-			 /     \
-			2      10
+                5
+               / \
+              3   8
+             /     \
+            2      10
 	Sem rotações necessárias
 	Print inorder: 2, 3, 5, 8, 10
 	*/
@@ -103,6 +103,9 @@ int main() {
 
 	// Procura e printa um elemento (0 - não encontrou / 1 - encontrou)
 	printf("Find element: %d\n", avlTree_find_element(avlTree, 120));
+	
+	// Calcula a altura da ávore (0 se vazia)
+	printf("Height: %d\n", avlTree_height(avlTree));
 
 	// Libera a memória alocada para a árvore
 	avlTree_clear(avlTree);

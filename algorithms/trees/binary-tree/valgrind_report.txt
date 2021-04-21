@@ -1,16 +1,18 @@
-==8945== Memcheck, a memory error detector
-==8945== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==8945== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==8945== Command: ./binary-tree
-==8945== 
+==12031== Memcheck, a memory error detector
+==12031== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12031== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==12031== Command: ./binary-tree
+==12031== 
 <1<2<><4<><>>><3<5<><>><6<><>>>>
--999
-==8945== 
-==8945== HEAP SUMMARY:
-==8945==     in use at exit: 0 bytes in 0 blocks
-==8945==   total heap usage: 8 allocs, 8 frees, 1,176 bytes allocated
-==8945== 
-==8945== All heap blocks were freed -- no leaks are possible
-==8945== 
-==8945== For lists of detected and suppressed errors, rerun with: -s
-==8945== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Find node: -999
+Tree's Height: 2
+Node's Height: -1
+==12031== 
+==12031== HEAP SUMMARY:
+==12031==     in use at exit: 0 bytes in 0 blocks
+==12031==   total heap usage: 8 allocs, 8 frees, 1,176 bytes allocated
+==12031== 
+==12031== All heap blocks were freed -- no leaks are possible
+==12031== 
+==12031== For lists of detected and suppressed errors, rerun with: -s
+==12031== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
