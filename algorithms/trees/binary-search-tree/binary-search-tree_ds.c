@@ -117,10 +117,12 @@ void bsTree_print(bsTree* tree) {
 	printf("\n");
 }
 
+// Função para calcular o maior entre dois valores
 int bigger(int x, int y){
   return (x > y) ? x : y;
 }
 
+// Função para calcular a altura de um nó
 int bstNode_height(bstNode* root) {
   if (!root){
     return -1;
@@ -129,6 +131,7 @@ int bstNode_height(bstNode* root) {
   }
 }
 
+// Função para calcular a altura da árvore
 int bsTree_height(bsTree* tree) {
   return bstNode_height(tree->root);
 }

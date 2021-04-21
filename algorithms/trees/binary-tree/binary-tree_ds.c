@@ -59,10 +59,12 @@ void bTree_print(bTree* tree) {
   btNode_print(tree->root);
 }
 
+// Função para calcular o maior entre dois valores
 int bigger(int x, int y){
   return (x > y) ? x : y;
 }
 
+// Função para calcular a altura de um nó
 int btNode_height(btNode* root) {
   if (!root){
     return -1;
@@ -71,6 +73,7 @@ int btNode_height(btNode* root) {
   }
 }
 
+// Função para calcular a altura da árvore
 int bTree_height(bTree* tree) {
   return btNode_height(tree->root);
 }
