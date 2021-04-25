@@ -50,28 +50,29 @@ Books in README.md
 typedef struct heap Heap;
 
 struct heap {
-    int size; // max size (If the size reaches 75% of the maximum occupancy, the array will be increased by size*gold_number to get a better performance)
-    int n; // number of elements stored in heap
+    int size; // max size
+    int n; // number of elements stored in heap (If 'n' reaches 75% of the size, 
+           // the array will be increased by size*gold_number to get a better performance)
     int** arr; // pointer of pointer to array
 }
 
 // ****** CORE ******
+void heap_create(void);
 void heap_insert(Heap* heap, int priority);
 int heap_extract_max(Heap* heap);
 void heap_remove(Heap* heap, int idx);
 int heap_get_max(Heap* heap);
 void heap_change_priority(int idx, int new_priority);
+void heap_print(Heap* heap); // inorder
+int heap_find(Heap* heap, int value);
+void heap_clear(Heap* heap);
+void heap_is_empty(Heap* heap);
 
 // ****** AUXILIARY FUNCTIONS ******
-int heap_find(Heap* heap, int value);
 void heap_resize(Heap* heap);
-void heap_create(void);
-void heap_print(Heap* heap); // inorder
-void heap_clear(Heap* heap);
 int heap_get_parent(int idx);
 int heap_get_left_child(int idx);
 int heap_get_right_child(int idx);
 void heap_shift_up(int idx);
 void heap_shift_down(int idx); 
-void heap_is_empty(Heap* heap);
 void heap_swap(Heap* heap, int idx_1, int idx_2);
