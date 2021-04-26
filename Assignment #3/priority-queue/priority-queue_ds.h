@@ -31,10 +31,10 @@ Binary Heap - A Binary Tree
 Operations defined here - Priority Queue using Heap - MaxHeap:
     1. heap_insert(priority) - Inserts a new element with priority 'priority'
     2. heap_extract_max() - Extracts an element with maximum priority.
-    3. heap_remove(idx) - Removes an element pointed by 'idx'
+    3. heap_remove(priority) - Removes an element pointed by 'priority'
     4. heap_get_max() - Returns an element with maximum priority.
-    5. heap_change_priority(idx, new_priority) - Changes the priority of an element pointed
-        by 'idx' to 'new_priority'.
+    5. heap_change_priority(priority, new_priority) - Changes the priority of an element pointed
+        by 'priority' to 'new_priority'.
 
 References
 https://www.geeksforgeeks.org/priority-queue-using-binary-heap/
@@ -48,31 +48,36 @@ Books in README.md
 // ****** STRUCT ******
 // This implementation uses an array with variable size, that starts in 10 (arbitrary)
 typedef struct heap Heap;
+typedef struct node Node;
 
 struct heap {
     int size; // max size
     int n; // number of elements stored in heap (If 'n' reaches 75% of the size, 
            // the array will be increased by size*gold_number to get a better performance)
-    int** arr; // pointer of pointer to array
-}
+    Node** arr; // pointer of pointer to data array
+};
+
+struct node {
+    int value;
+};
 
 // ****** CORE ******
-void heap_create(void);
-void heap_insert(Heap* heap, int priority);
+Heap* heap_create(void);
+void heap_insert(Heap* heap, Node* priority);
 int heap_extract_max(Heap* heap);
-void heap_remove(Heap* heap, int idx);
+void heap_remove(Heap* heap, int index);
 int heap_get_max(Heap* heap);
-void heap_change_priority(int idx, int new_priority);
-void heap_print(Heap* heap); // inorder
+void heap_change_priority(Heap* heap, int index, int new_priority);
+void heap_print(Heap* heap);
 int heap_find(Heap* heap, int value);
 void heap_clear(Heap* heap);
-void heap_is_empty(Heap* heap);
+int heap_is_empty(Heap* heap);
 
 // ****** AUXILIARY FUNCTIONS ******
 void heap_resize(Heap* heap);
-int heap_get_parent(int idx);
-int heap_get_left_child(int idx);
-int heap_get_right_child(int idx);
-void heap_shift_up(int idx);
-void heap_shift_down(int idx); 
-void heap_swap(Heap* heap, int idx_1, int idx_2);
+int heap_get_parent(int index);
+int heap_get_left_child(int index);
+int heap_get_right_child(int index);
+void heap_shift_up(Heap* heap, int index);
+void heap_shift_down(Heap* heap, int index); 
+void heap_swap(Heap* heap, int index_1, int index_2);
