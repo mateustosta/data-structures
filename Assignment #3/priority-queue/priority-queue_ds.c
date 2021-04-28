@@ -13,9 +13,9 @@ Heap* heap_create(void) {
     // Checks whether memory allocation has been made
     if (heap) {
         heap->size = 10; // 10 is an arbitrary value
-        heap->n = 0; // At first, the heap is empty. (0 by default)
+        heap->n = -1; // At first, the heap is empty. (-1 by default)
         // Attempts to allocate memory for the arr
-        heap->arr = (Node**) malloc(heap->size * sizeof(Node*));
+        heap->arr = (int**) malloc(heap->size * sizeof(int*));
         // Checks whether memory allocation has been made
         if (heap->arr) {
             // Starts all arr's elements with NULL
@@ -38,7 +38,7 @@ Heap* heap_create(void) {
 // Function to insert a new element in the heap
 // Parameters: Pointer to an existing heap and the priority of the new element
 // Returns: None
-void heap_insert(Heap* heap, Node* priority) {
+void heap_insert(Heap* heap, int* priority) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
         return;
@@ -54,18 +54,12 @@ void heap_insert(Heap* heap, Node* priority) {
         heap_resize(heap);
     }
 
-    // We go through the whole heap looking for the first free position
-    int index = 0;
-    while (heap->arr[index]) {
-        index = (index + 1) % heap->size;
-    }
-    
-    // Adds a new element on the heap.
-    // We will always add this element at the 'n' position.
-    heap->arr[index] = priority;
-
     // Increases heap->n
     heap->n++;
+
+    // Adds a new element on the heap.
+    // We will always add this element at the 'n' position.
+    heap->arr[heap->n] = priority;
     
     // Shift Up
     heap_shift_up(heap, heap->n);
@@ -81,10 +75,10 @@ int heap_extract_max(Heap* heap) {
     }
 
     // Stores the root in result
-    int result = heap->arr[0]->value;
+    int result = *heap->arr[0];
 
     // Replace the value at the root with the last leaf
-    heap->arr[0]->value = heap->arr[heap->n]->value; // mexi aqui sem warning
+    *heap->arr[0] = *heap->arr[heap->n];
     heap->n--;
 
     // Shift Down the replaced element
@@ -103,7 +97,7 @@ void heap_remove(Heap* heap, int index) {
     }
 
     // Makes the element in the position pointed by "index" the largest element in the heap
-    heap->arr[index]->value = heap_get_max(heap) + 1;
+    *heap->arr[index] = heap_get_max(heap) + 1;
 
     // Shift the node at the position pointed by "index" to the root
     heap_shift_up(heap, index);
@@ -121,7 +115,7 @@ int heap_get_max(Heap* heap) {
         exit(1);
     }
 
-    return heap->arr[0]->value; 
+    return *heap->arr[0];
 }
 
 // Function to change the priority of a node
@@ -134,10 +128,10 @@ void heap_change_priority(Heap* heap, int index, int new_priority) {
     }
 
     // Gets the element pointed by "index"
-    int old_priority = heap->arr[index]->value;
+    int old_priority = *heap->arr[index];
 
     // Makes the priority of the element pointed by index being the new priority
-    heap->arr[index]->value = new_priority;
+    *heap->arr[index] = new_priority;
 
     // Shift Up if old_priority < new_priority
     if (old_priority < new_priority) {
@@ -157,29 +151,28 @@ void heap_print(Heap* heap) {
         return;
     }
 
-    // TODO: Debug this part. Segmentation Fault.
-    for (int i = 0; i < (heap->n; ++i) {
-        printf("INDEX: %d / VALUE: %d\n", i, heap->arr[i]->value);
+    for (int i = 0; i <= heap->n; ++i) {
+        printf("INDEX: %d / VALUE: %d\n", i, *heap->arr[i]);
     }
     printf("\n");
 }
 
 // Function to find an element in heap
 // Parameters: Pointer to an existing heap and the value to be searched
-// Returns: Value (if found) / -999999 (if not found)
-int heap_find(Heap* heap, int value) {
+// Returns: Pointer to value (if found) / NULL (if not found)
+int* heap_find(Heap* heap, int value) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
         exit(1);
     }
 
-    for (int i = 0; i < heap->n; ++i) {
-        if (heap->arr[i]->value == value) {
-            return heap->arr[i]->value;
+    for (int i = 0; i <= heap->n; ++i) {
+        if (*heap->arr[i] == value) {
+            return heap->arr[i];
         }
     }
 
-    return -999999;
+    return NULL;
 }
 
 // Function to free memory
@@ -195,6 +188,7 @@ void heap_clear(Heap* heap) {
         free(heap->arr[i]);
     }
 
+    free(heap->arr);
     free(heap);
 }
 
@@ -207,7 +201,7 @@ int heap_is_empty(Heap* heap) {
         exit(1);
     }
 
-    return heap->n == 0;
+    return heap->n == -1;
 }
 
 // Function to resize the heap
@@ -219,13 +213,13 @@ void heap_resize(Heap* heap) {
         return;
     }
     
-    int old_size = heap->size; // old size
-    Node** prev = heap->arr; // pointer to the first element
+    int old_n = heap->n+1; // old n (number of elements in heap)
+    int** prev = heap->arr; // pointer to the first element
 
-    heap->n = 0;
+    heap->n = -1;
     heap->size *= 1.61803399; // gold number
     // Attempts to allocate memory for the arr
-    heap->arr = (Node**) malloc(heap->size * sizeof(Node*));
+    heap->arr = (int**) malloc(heap->size * sizeof(int*));
     // Checks whether memory allocation has been made
     if (heap->arr) {
         // Starts all arr's elements with NULL
@@ -238,7 +232,7 @@ void heap_resize(Heap* heap) {
     }
     
     // Copy all the elements of "prev" into new heap
-    for (int i = 0; i < old_size; ++i) {
+    for (int i = 0; i < old_n; ++i) {
         heap_insert(heap, prev[i]);
     }
 
@@ -279,9 +273,9 @@ void heap_shift_up(Heap* heap, int index) {
         return;
     }
 
-    while (index > 0 && heap->arr[heap_get_parent(index)] < heap->arr[index]) {
+    while (index > 0 && *heap->arr[heap_get_parent(index)] < *heap->arr[index]) {
         // Swap parent and current node
-        heap_swap(heap, heap->arr[heap_get_parent(index)]->value, heap->arr[index]->value);
+        heap_swap(heap, heap_get_parent(index), index);
 
         // Update "index" to parent of "index"
         index = heap_get_parent(index);
@@ -302,11 +296,11 @@ void heap_shift_down(Heap* heap, int index) {
     while (left_child < heap->n) {
         int right_child = heap_get_right_child(index);
 
-        if (right_child < heap->n && heap->arr[right_child] > heap->arr[left_child]) {
+        if (right_child < heap->n && *heap->arr[right_child] > *heap->arr[left_child]) {
             left_child = right_child;
         }
 
-        if (heap->arr[left_child] < heap->arr[index]) {
+        if (*heap->arr[left_child] < *heap->arr[index]) {
             break;
         }
 
@@ -327,7 +321,7 @@ void heap_swap(Heap* heap, int index_1, int index_2) {
         return;
     }
 
-    int tmp = heap->arr[index_1]->value;
-    heap->arr[index_1]->value = heap->arr[index_2]->value;
-    heap->arr[index_2]->value = tmp;
+    int tmp = *heap->arr[index_1];
+    *heap->arr[index_1] = *heap->arr[index_2];
+    *heap->arr[index_2] = tmp;
 }

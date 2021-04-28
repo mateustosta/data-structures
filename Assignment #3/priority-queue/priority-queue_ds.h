@@ -48,28 +48,23 @@ Books in README.md
 // ****** STRUCT ******
 // This implementation uses an array with variable size, that starts in 10 (arbitrary)
 typedef struct heap Heap;
-typedef struct node Node;
 
 struct heap {
     int size; // max size
     int n; // number of elements stored in heap (If 'n' reaches 75% of the size, 
            // the array will be increased by size*gold_number to get a better performance)
-    Node** arr; // pointer of pointer to data array
-};
-
-struct node {
-    int value;
+    int** arr; // pointer of pointer to data array
 };
 
 // ****** CORE ******
 Heap* heap_create(void);
-void heap_insert(Heap* heap, Node* priority);
+void heap_insert(Heap* heap, int* priority);
 int heap_extract_max(Heap* heap);
 void heap_remove(Heap* heap, int index);
 int heap_get_max(Heap* heap);
 void heap_change_priority(Heap* heap, int index, int new_priority);
 void heap_print(Heap* heap);
-int heap_find(Heap* heap, int value);
+int* heap_find(Heap* heap, int value);
 void heap_clear(Heap* heap);
 int heap_is_empty(Heap* heap);
 
