@@ -45,8 +45,7 @@ void heap_insert(Heap* heap, int* priority) {
     }
     
     // if 'heap->n' equals to 75% of 'heap->size', 
-    // then we will need to resize heap->arr to get 
-    // a better performance on search operation
+    // then we will resize heap->arr
     if (heap->n > 0.75 * heap->size) {
         // resize heap->size
         // If there is any problem in resizing the heap, 
@@ -68,6 +67,7 @@ void heap_insert(Heap* heap, int* priority) {
 // Function to extracts the element with maximum priority
 // Parameters: Pointer to an existing heap
 // Returns: Element with maximum priority
+@TODO: Pensar em uma forma melhor de implementar essa função
 int heap_extract_max(Heap* heap) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
