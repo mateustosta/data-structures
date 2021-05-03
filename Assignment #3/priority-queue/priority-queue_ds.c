@@ -41,7 +41,8 @@ Heap* heap_create(void) {
 void heap_insert(Heap* heap, int* priority) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
     
     // if 'heap->n' equals to 75% of 'heap->size', 
@@ -66,12 +67,13 @@ void heap_insert(Heap* heap, int* priority) {
 
 // Function to extracts the element with maximum priority
 // Parameters: Pointer to an existing heap
-// Returns: Element with maximum priority
-@TODO: Pensar em uma forma melhor de implementar essa função
+// Returns: Element with maximum priority / If there is no element in root, then 
+                                         // the program will exit
 int heap_extract_max(Heap* heap) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return -99999;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     // Stores the root in result
@@ -93,7 +95,8 @@ int heap_extract_max(Heap* heap) {
 void heap_remove(Heap* heap, int index) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     // Makes the element in the position pointed by "index" the largest element in the heap
@@ -112,6 +115,7 @@ void heap_remove(Heap* heap, int index) {
 int heap_get_max(Heap* heap) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
+        printf("*heap == NULL or *heap->arr == NULL\n");
         exit(1);
     }
 
@@ -124,7 +128,8 @@ int heap_get_max(Heap* heap) {
 void heap_change_priority(Heap* heap, int index, int new_priority) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     // Gets the element pointed by "index"
@@ -148,7 +153,8 @@ void heap_change_priority(Heap* heap, int index, int new_priority) {
 void heap_print(Heap* heap) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     for (int i = 0; i <= heap->n; ++i) {
@@ -163,6 +169,7 @@ void heap_print(Heap* heap) {
 int* heap_find(Heap* heap, int value) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
+        printf("*heap == NULL or *heap->arr == NULL\n");
         exit(1);
     }
 
@@ -181,7 +188,8 @@ int* heap_find(Heap* heap, int value) {
 void heap_clear(Heap* heap) {
     // Checks if the Heap exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     for (int i = 0; i < heap->size; ++i) {
@@ -198,6 +206,7 @@ void heap_clear(Heap* heap) {
 int heap_is_empty(Heap* heap) {
     // Checks if the Heap exists
     if (!heap) {
+        printf("*heap == NULL\n");
         exit(1);
     }
 
@@ -210,7 +219,8 @@ int heap_is_empty(Heap* heap) {
 void heap_resize(Heap* heap) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
     
     int old_n = heap->n+1; // old n (number of elements in heap)
@@ -270,7 +280,8 @@ int heap_get_right_child(int index) {
 void heap_shift_up(Heap* heap, int index) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     while (index > 0 && *heap->arr[heap_get_parent(index)] < *heap->arr[index]) {
@@ -288,7 +299,8 @@ void heap_shift_up(Heap* heap, int index) {
 void heap_shift_down(Heap* heap, int index) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     int left_child = heap_get_left_child(index);
@@ -318,7 +330,8 @@ void heap_shift_down(Heap* heap, int index) {
 void heap_swap(Heap* heap, int index_1, int index_2) {
     // Checks if the Heap and the array arr exists
     if (!heap || !heap->arr) {
-        return;
+        printf("*heap == NULL or *heap->arr == NULL\n");
+        exit(1);
     }
 
     int tmp = *heap->arr[index_1];
