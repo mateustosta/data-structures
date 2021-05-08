@@ -23,14 +23,14 @@ Heap* heap_create(void) {
                 heap->arr[i] = NULL;
             }
         } else {
-            printf("There is not enough memory available to allocate the arr array!\n");
+            printf("There is no enough memory available to allocate the arr array!\n");
             exit(1);
         }
 
         // Return the pointer to Heap
         return heap;
     } else {
-        printf("There is not enough memory available to allocate the heap!\n");
+        printf("There is no enough memory available to allocate the heap!\n");
         exit(1);
     }
 }
@@ -237,7 +237,7 @@ void heap_resize(Heap* heap) {
             heap->arr[i] = NULL;
         }
     } else {
-        printf("There is not enough memory available to allocate the arr array!\n");
+        printf("There is no enough memory available to allocate the arr array!\n");
         exit(1);
     }
     
