@@ -4,6 +4,7 @@
 #include <time.h>
 #include <hash-table_ds.h>
 
+// Static variables for universal hash
 static unsigned int a = 0;
 static unsigned int b = 0;
 
@@ -164,14 +165,20 @@ unsigned short int hsh_is_empty(Hash* table) {
 // Hash function
 // Parameters: Pointer to an existing table and the key
 // Returns: Hashed key
+// https://www.geeksforgeeks.org/generating-random-number-range-c/
 unsigned int hash(Hash* table, long int CPF) {
-    // Universal hash: h(k)_{a,b} = ((ak + b) % p) % table-size
-    if (a == 0) {
-        a = hsh_generate_parameters(0, table->size);
+    // Checks if the Table and the array Person exists
+    if (!table || !table->p) {
+        printf("*table == NULL or *table->p == NULL\n");
+        exit(1);
     }
 
-    if (b == 0) {
-        b = hsh_generate_parameters(1, table->size);
+    // Universal hash: h(k)_{a,b} = ((ak + b) % p) % table-size
+    if (a == 0 && b == 0) {
+        // Use current time as seed
+        srand(time(0));
+        a = (rand() % (table->size*30 - 2)) + 1; // rand() % (upper - lower + 1)) + lower = ]0,table->size*30]
+        b = (rand() % (table->size*30 - 1)) + 0; // rand() % (upper - lower + 1)) + lower = [0,table->size*30]
     }
 
     return ((a*CPF + b) % table->size*30) % table->size;
@@ -188,16 +195,16 @@ void hsh_resize(Hash* table) {
     }
 
     unsigned short int old_n = table->n; // old n (number of elements in table)
-    Person** prev_person_array = table->p; // pointer to the first element
+    Person **prev_person_array = table->p; // pointer to the first element
 
     table->n = 0;
-    table->size = (unsigned short int)(table->size * 1.947);
+    table->size = (unsigned short int) (table->size * 1.947);
     // Attempts to allocate memory for the person->p array
-    table->p = (Person**) malloc(table->size * sizeof(Person*));
+    table->p = (Person **) malloc(table->size * sizeof(Person *));
     // Checks whether memory allocation has been made
     if (table->p) {
         // Starts all p's elements with NULL
-        for (int i = 0;i < table->size;++i) {
+        for (int i = 0; i < table->size; ++i) {
             table->p[i] = NULL;
         }
     } else {
@@ -206,32 +213,10 @@ void hsh_resize(Hash* table) {
     }
 
     // Copy all the elements of 'prev_person_array' into new table
-    for (int i = 0;i < old_n;++i) {
+    for (int i = 0; i < old_n; ++i) {
         hsh_insert(table, prev_person_array[i]->CPF, prev_person_array[i]->name);
     }
 
     // Free the memory allocated to 'prev_person_array'
     free(prev_person_array);
-}
-
-// Function to generate A and B for the universal hashing
-// Parameters: 0 - A / 1 - B
-// Returns: Random number
-// https://www.geeksforgeeks.org/generating-random-number-range-c/
-unsigned int hsh_generate_parameters(unsigned short int parameter, unsigned int table_size) {
-    // Use current time as seed
-    srand(time(0));
-
-    // An value greater than table->size
-    unsigned int p = table_size*30; // 30 is an arbitrary number
-
-    if (parameter == 0) {
-        // Generate a number in ]0,p]
-        a = (rand() % (p - 2)) + 1; // rand() % (upper - lower + 1)) + lower
-        return a;
-    } else {
-        // Generate a number in [0,p]
-        b = (rand() % (p - 1)) + 0; // rand() % (upper - lower + 1)) + lower
-        return b;
-    }
 }

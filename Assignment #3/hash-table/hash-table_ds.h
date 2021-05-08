@@ -28,4 +28,3 @@ unsigned short int hsh_is_empty(Hash* table);
 // ****** AUXILIARY FUNCTIONS ******
 unsigned int hash(Hash* table, long int CPF);
 void hsh_resize(Hash* table);
-unsigned int hsh_generate_parameters(unsigned short int parameters, unsigned int table_size);
