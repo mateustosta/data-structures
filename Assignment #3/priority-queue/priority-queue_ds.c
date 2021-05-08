@@ -45,7 +45,7 @@ void heap_insert(Heap* heap, int* priority) {
         exit(1);
     }
     
-    // if 'heap->n' equals to 75% of 'heap->size', 
+    // if 'heap->n' greater to 75% of 'heap->size', 
     // then we will resize heap->arr
     if (heap->n > 0.75 * heap->size) {
         // resize heap->size
@@ -202,7 +202,7 @@ void heap_clear(Heap* heap) {
 
 // Function to check if the heap is empty
 // Parameters: Pointer to an existing heap
-// Returns: None
+// Returns: 1 - Empty / 0 - Not empty
 int heap_is_empty(Heap* heap) {
     // Checks if the Heap exists
     if (!heap) {
