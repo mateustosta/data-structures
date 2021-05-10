@@ -14,6 +14,7 @@ struct person {
     long int CPF; // data
     char name[30]; // data
     Person* next; // pointer to the next element (collision handling)
+    Person* prev; // pointer to the previous element (resize handling)
 };
 
 

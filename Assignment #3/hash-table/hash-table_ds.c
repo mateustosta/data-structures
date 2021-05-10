@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <hash-table_ds.h>
+#include "hash-table_ds.h"
 
 // Static variables for universal hash
 static unsigned int a = 0;
@@ -58,7 +58,7 @@ Person* hsh_find(Hash* table, long int CPF) {
     Person *person = table->p[ind];
 
     // Loop until we find the requested person, or, person->next == NULL
-    while (person != NULL) {
+    while (person) {
         if (person->CPF == CPF) {
             return person;
         } else {
@@ -90,8 +90,9 @@ void hsh_insert(Hash* table, Person* person) {
     unsigned int ind = hash(table, person->CPF);
 
     // Collision - handling with linked list
-    if (table->p[ind] != NULL) {
+    if (table->p[ind]) {
         person->next = table->p[ind];
+        table->p[ind]->prev = person;
     }
 
     // Insert the new person into the 'ind' index of the array
@@ -102,6 +103,7 @@ void hsh_insert(Hash* table, Person* person) {
 
 // Function to print an element of the table
 // Parameters: Pointer to an existing table and the CPF of the person
+// Returns: None
 void hsh_print(Hash* table, long int CPF) {
     // Checks if the Table and the array Person exists
     if (!table || !table->p) {
@@ -130,8 +132,13 @@ void hsh_clear(Hash* table) {
         exit(1);
     }
 
+    Person* tmp;
     for (int i = 0;i < table->size;++i) {
-        free(table->p[i]);
+        while (table->p[i]) {
+            tmp = table->p[i];
+            table->p[i] = table->p[i]->next;
+            free(tmp);
+        }
     }
 
     free(table->p);
@@ -171,8 +178,6 @@ unsigned int hash(Hash* table, long int CPF) {
     }
 
     return ((a*CPF + b) % table->size*30) % table->size;
-
-//    return CPF%table->size;
 }
 
 // Function to resize the table
@@ -206,7 +211,20 @@ void hsh_resize(Hash* table) {
     // Copy all the elements of 'prev_person_array' into new table
     for (int i = 0; i < old_n; ++i) {
         if (prev_person_array[i]) {
-            hsh_insert(table, prev_person_array[i]);
+            if (!prev_person_array[i]->next) {
+                hsh_insert(table, prev_person_array[i]); // if the element has no collided with another one, we just copy him to the new table
+            } else {
+                Person* current = prev_person_array[i];
+                while (current->next) {
+                    current = current->next; // get the tail of the linked list
+                }
+                while (current->prev) {
+                    hsh_insert(table, current); // insert elements from the last to the first
+                    current = current->prev; // get the previous element
+                    current->next = NULL;
+                }
+                hsh_insert(table, current); // insert the head of the list in the new table
+            }
         }
     }
 
