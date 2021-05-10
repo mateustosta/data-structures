@@ -57,11 +57,6 @@ Person* hsh_find(Hash* table, long int CPF) {
     // Get the pointer to element in index 'ind'
     Person *person = table->p[ind];
 
-    // Checks if *person is the person we want
-    if (person->CPF == CPF) {
-        return person;
-    }
-
     // Loop until we find the requested person, or, person->next == NULL
     while (person != NULL) {
         if (person->CPF == CPF) {
@@ -78,15 +73,12 @@ Person* hsh_find(Hash* table, long int CPF) {
 // Function to insert a new element in the table
 // Parameters: Pointer to an existing table and the person to be inserted
 // Returns: None
-void hsh_insert(Hash* table, long int CPF, char* name) {
+void hsh_insert(Hash* table, Person* person) {
     // Checks if the Table and the array Person exists
     if (!table || !table->p) {
         printf("*table == NULL or *table->p == NULL\n");
         exit(1);
     }
-
-    // We invoke the 'hash' function to map the key
-    unsigned int ind = hash(table, CPF);
 
     // if 'table->n' greater than 75% of 'table-size',
     // then we'll resize 'table->person'
@@ -94,20 +86,17 @@ void hsh_insert(Hash* table, long int CPF, char* name) {
         hsh_resize(table);
     }
 
-    // Attempts to allocate memory for the Person
-    Person* person = (Person*) malloc(sizeof(Person));
+    // We invoke the 'hash' function to map the key
+    unsigned int ind = hash(table, person->CPF);
 
-    // Checks whether memory allocation has been made
-    if (person) {
-        person->CPF = CPF; // set data
-        strcpy(person->name, name); // set data
-        person->next = table->p[ind]; // insert the element in the first position of the linked list
-    } else {
-        printf("There is no enough memory available to allocate the Person struct!\n");
-        exit(1);
+    // Collision - handling with linked list
+    if (table->p[ind] != NULL) {
+        person->next = table->p[ind];
     }
 
-    table->p[ind] = person; // insert the new person in the first position of the linked list
+    // Insert the new person into the 'ind' index of the array
+    table->p[ind] = person;
+
     table->n++;
 }
 
@@ -182,6 +171,8 @@ unsigned int hash(Hash* table, long int CPF) {
     }
 
     return ((a*CPF + b) % table->size*30) % table->size;
+
+//    return CPF%table->size;
 }
 
 // Function to resize the table
@@ -200,7 +191,7 @@ void hsh_resize(Hash* table) {
     table->n = 0;
     table->size = (unsigned short int) (table->size * 1.947);
     // Attempts to allocate memory for the person->p array
-    table->p = (Person **) malloc(table->size * sizeof(Person *));
+    table->p = (Person**) malloc(table->size * sizeof(Person*));
     // Checks whether memory allocation has been made
     if (table->p) {
         // Starts all p's elements with NULL
@@ -214,7 +205,9 @@ void hsh_resize(Hash* table) {
 
     // Copy all the elements of 'prev_person_array' into new table
     for (int i = 0; i < old_n; ++i) {
-        hsh_insert(table, prev_person_array[i]->CPF, prev_person_array[i]->name);
+        if (prev_person_array[i]) {
+            hsh_insert(table, prev_person_array[i]);
+        }
     }
 
     // Free the memory allocated to 'prev_person_array'

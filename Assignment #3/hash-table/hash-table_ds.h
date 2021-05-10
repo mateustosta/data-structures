@@ -20,7 +20,7 @@ struct person {
 // ****** CORE ******
 Hash* hsh_create(void);
 Person* hsh_find(Hash* table, long int CPF);
-void hsh_insert(Hash* table, long int CPF, char* name);
+void hsh_insert(Hash* table, Person* person);
 void hsh_print(Hash* table, long int CPF);
 void hsh_clear(Hash* table);
 unsigned short int hsh_is_empty(Hash* table);
