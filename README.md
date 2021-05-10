@@ -14,7 +14,7 @@ This repository contains the main algorithms developed in the course Data Struct
 - Cormen, T. H., Leiserson, C. E., Rivest, R. L., and Stein, C. (2009).Introduction to Algorithms, Third Edition. The MIT Press, 3rd edition
 
 ## Assignments:
- - [Assignment #1: Create an Abstract Data Type of a Binary Tree](https://github.com/mateustosta/data-structures/tree/master/Assignment%20%231/binary-tree)
+ - [Assignment #1: Create an Abstract Data Type of a Binary Tree](https://github.com/mateustosta/data-structures/tree/main/Assignment%20%231/binary-tree)
  - [Assignment #2: Create an Abstract Data Type of a Binary Search Tree](https://github.com/mateustosta/data-structures/tree/main/Assignment%20%232/binary-search-tree)
  - [Assignment #2.1: Create an Abstract Data Type of an AVL Tree](https://github.com/mateustosta/data-structures/tree/main/Assignment%20%232/avl-tree)
 - [Assignment #3: Create an Abstract Data Type of a Priority Queue with Heap (Dynamic array)](https://github.com/mateustosta/data-structures/tree/main/Assignment%20%233/priority-queue)
