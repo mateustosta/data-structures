@@ -4,7 +4,7 @@ Priority Queue - Extension of Queue
         1. All elements have a priority associated with them.
         2. A high priority element leaves the queue before a low priority element.
         3. If two (or more) elements have the same priority, then, they'll exit from
-            the queue in the order that they appear in queue. (FIFO).
+            the queue in the order that they appear in queue.
 
 Binary Heap - A Binary Tree
     Definition:
